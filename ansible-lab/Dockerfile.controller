@@ -1,0 +1,8 @@
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get install -y ansible sshpass openssh-client python3 && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /etc/ansible && \
+    echo -e "[defaults]\nhost_key_checking = False" > /etc/ansible/ansible.cfg
+
+WORKDIR /workspace

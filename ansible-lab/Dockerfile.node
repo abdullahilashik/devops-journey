@@ -3,6 +3,8 @@ FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y openssh-server python3 python3-pip && rm -rf /var/lib/apt/lists/*
 RUN pip3 install docker requests
 
+RUN apt-get update && apt-get install -y ansible sshpass openssh-client python3 && rm -rf /var/lib/apt/lists/*
+
 # Configure SSH for root login
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd

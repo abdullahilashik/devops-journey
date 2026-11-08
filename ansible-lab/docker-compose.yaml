@@ -22,10 +22,11 @@
 #     container_name: ansible-node2
 #     tty: true
 
-
 services:
   ansible-controller:
-    image: ubuntu:22.04
+    build:
+      context: .
+      dockerfile: Dockerfile.controller
     container_name: ansible-controller
     tty: true
     volumes:
