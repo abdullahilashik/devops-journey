@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Intro') {
+            steps {
+                echo 'Initializing the pipeline...'
+            }
+        }
+
+        stage('Commit') {
+            steps {
+                git 'https://github.com/abdullahilashik/nestjs-queue'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh `docker build -t express-web .`
+            }
+        }
+
+        stage('Docker push') {
+            steps {                
+                sh 'docker tag express-web ashikarefin/express-web:latest'
+                sh 'docker push ashikarefin/express-web:latest'
+            }
+        }
+    }
+}
