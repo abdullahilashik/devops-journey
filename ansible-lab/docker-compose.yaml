@@ -1,32 +1,6 @@
-# services:
-#   ansible-controller:
-#     image: ubuntu:22.04
-#     container_name: ansible-controller
-#     tty: true
-#     volumes:
-#       - .:/workspace
-#     working_dir: /workspace
-#     command: /bin/bash
-
-#   node1:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile.node
-#     container_name: ansible-node1
-#     tty: true
-
-#   node2:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile.node
-#     container_name: ansible-node2
-#     tty: true
-
 services:
   ansible-controller:
-    build:
-      context: .
-      dockerfile: Dockerfile.controller
+    image: ubuntu:22.04
     container_name: ansible-controller
     tty: true
     volumes:
@@ -40,8 +14,6 @@ services:
       dockerfile: Dockerfile.node
     container_name: ansible-node1
     tty: true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
   node2:
     build:
