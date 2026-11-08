@@ -1,0 +1,23 @@
+---
+- name: Deploy Express App to Production Node
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Pull latest image from Docker Hub
+      docker_image:
+        name: ashikarefin/jenkins-web:latest
+        source: pull
+
+    - name: Stop existing container if running
+      docker_container:
+        name: express-web-app
+        state: absent
+
+    - name: Run new Express container
+      docker_container:
+        name: express-web-app
+        image: ashikarefin/jenkins-web:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "80:3000"
