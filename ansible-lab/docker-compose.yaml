@@ -1,8 +1,36 @@
+# services:
+#   ansible-controller:
+#     image: ubuntu:22.04
+#     container_name: ansible-controller
+#     tty: true
+#     volumes:
+#       - .:/workspace
+#     working_dir: /workspace
+#     command: /bin/bash
+
+#   node1:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.node
+#     container_name: ansible-node1
+#     tty: true
+
+#   node2:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.node
+#     container_name: ansible-node2
+#     tty: true
+
 services:
   ansible-controller:
-    image: ubuntu:22.04
+    build:
+      context: .
+      dockerfile: Dockerfile.controller
     container_name: ansible-controller
     tty: true
+    environment:
+      - ANSIBLE_CONFIG=/workspace/ansible.cfg
     volumes:
       - .:/workspace
     working_dir: /workspace
@@ -14,6 +42,10 @@ services:
       dockerfile: Dockerfile.node
     container_name: ansible-node1
     tty: true
+    ports:
+      - "8081:80"       # Access node1 app on http://localhost:8081
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Allows node1 to talk to Docker engine
 
   node2:
     build:
@@ -21,3 +53,7 @@ services:
       dockerfile: Dockerfile.node
     container_name: ansible-node2
     tty: true
+    ports:
+      - "8082:80"       # Access node2 app on http://localhost:8082
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
