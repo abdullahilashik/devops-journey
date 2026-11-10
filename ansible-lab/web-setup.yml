@@ -1,0 +1,20 @@
+---
+- name: Install and Start Nginx
+  hosts: servers       # Targets both node1 and node2 from your inventory
+  become: yes          # Run tasks with root privileges
+
+  tasks:
+    - name: Update apt repository cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
